@@ -8,16 +8,10 @@ get '/' do
   file.close
 
   # Build an output string in the form of a numbered list
-  # result = ""
-  # for i in 0..data.length-1
-  #   result += "#{i + 1}. #{data[i]}<br>"
-  # end
-
   for i in 0..data.length-1
-    data[i] = "#{i + 1}. #{data[i]}"
+    data[i] = "#{i + 1}. #{data[i]}" # modify each element to be numbered
   end
-  result = data.join("<br>")
-
+  result = data.join("<br>") # join array together into 1 string
 
   # Display output
   result
