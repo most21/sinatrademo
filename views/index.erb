@@ -7,9 +7,9 @@
   // Hit the JSON endpoint
   $.get("/cakes.json", function(data) {
     // Build output list
-    var items = [];
-    $.each(data["cake_list"], function(i, type) {
-      items.push('<li>' + type + '</li>');
+    var output = [];
+    $.each(data["cake_list"], function(i, cake_type) {
+      output.push('<li>' + cake_type + '</li>');
     }); // close each()
 
     // Add newly built list to view
