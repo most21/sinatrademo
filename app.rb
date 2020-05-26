@@ -19,5 +19,11 @@ require 'sinatra'
 
 # Better version using views/templates
 get '/' do
-  erb :index
+  # Read file
+  file = File.open("cake.list")
+  data = file.readlines
+  file.close
+
+  # Create view
+  erb :index, :locals => {:cake_list => data}
 end

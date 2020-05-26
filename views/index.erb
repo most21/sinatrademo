@@ -1,9 +1,5 @@
-<% file = File.open("cake.list") %>
-<% data = file.readlines %>
-<% file.close %>
-
 <ol>
-  <% data.each do |cake_type| %>
+  <% cake_list.each do |cake_type| %>
     <li> <%= cake_type %> </li>
   <% end %>
 </ol>
