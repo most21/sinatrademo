@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/json'
 
 # Simple version using string manipulation
 # get '/' do
@@ -18,12 +19,27 @@ require 'sinatra'
 # end
 
 # Better version using views/templates
+# get '/' do
+#   # Read file
+#   file = File.open("cake.list")
+#   data = file.readlines
+#   file.close
+#
+#   # Create view
+#   erb :index, :locals => {:cake_list => data}
+# end
+
+# Next version using a JSON endpoint
 get '/' do
+  erb :index
+end
+
+get '/cakes.json' do
   # Read file
   file = File.open("cake.list")
   data = file.readlines
   file.close
 
-  # Create view
-  erb :index, :locals => {:cake_list => data}
+  # Return cake list as JSON
+  json :cake_list => data
 end
