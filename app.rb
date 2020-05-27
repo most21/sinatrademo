@@ -14,19 +14,46 @@ get '/' do
 end
 
 # Read a single row
-get '/:id' do
-  data = Cake.find(params[:id]) # query database for specific cake id
+get '/read/:id' do
+  # Query database and display
+  data = Cake.find_by(id: params[:id])
   data.name # display cake name
 end
 
 # Add a cake to the database
-# post '/:type' do
-#   c = Cake.create(name: params[:type]) # create and save new row to db table
-#   #params[:type] + " was successfully added to the database"
-#   erb :add_cake
-#
-# end
+get '/add_cake' do # this route displays the input form
+  erb :add_cake
+end
 
+post '/add_cake' do # this route processes the input
+  c = Cake.create(name: params["name"]) # create and save new row to db table
+  #params["name"] + " was successfully added to the database"
+  redirect '/'
+end
+
+# Update an existing cake in the database
+get '/edit_cake' do
+  erb :edit_cake
+end
+
+post '/edit_cake' do
+  c = Cake.find_by(id: params["id"]) # find existing row
+  old_name = c.name
+  c.update(name: params["name"]) # update cake name
+  #params["id"] + " " + old_name + " was successfully edited to " + params["name"]
+  redirect '/'
+end
+
+# Delete an existing cake in the database
+get '/delete_cake' do
+  erb :delete_cake
+end
+
+post '/delete_cake' do
+  Cake.find(params[:id]).destroy # find and destroy (eat?) the cake
+  #params[:id] + " was successfully deleted"
+  redirect '/'
+end
 
 
 
