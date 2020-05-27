@@ -7,52 +7,52 @@ require 'sinatra/activerecord'
 class Cake < ActiveRecord::Base
 end
 
-# Read all rows
 get '/' do
-  data = Cake.all # query database for all rows in the cakes table
-  erb :index, :locals => {:cake_list => data}
+  redirect '/cakes'
 end
 
-# Read a single row
-get '/read/:id' do
-  # Query database and display
-  data = Cake.find_by(id: params[:id])
-  data.name # display cake name
+# Read all rows
+get '/cakes' do
+  @cakes = Cake.all # query database for all rows in the cakes table
+  erb :index
 end
 
 # Add a cake to the database
-get '/add_cake' do # this route displays the input form
+get '/cakes/new' do # this route displays the input form
   erb :add_cake
 end
 
-post '/add_cake' do # this route processes the input
-  c = Cake.create(name: params["name"]) # create and save new row to db table
-  #params["name"] + " was successfully added to the database"
-  redirect '/'
+post '/cakes' do # this route processes the input
+  c = Cake.create(name: params["name"])
+  redirect '/cakes'
 end
 
-# Update an existing cake in the database
-get '/edit_cake' do
+# Edit an existing cake in the database
+get '/cakes/edit' do
   erb :edit_cake
 end
 
-post '/edit_cake' do
+put '/cakes' do
   c = Cake.find_by(id: params["id"]) # find existing row
-  old_name = c.name
   c.update(name: params["name"]) # update cake name
-  #params["id"] + " " + old_name + " was successfully edited to " + params["name"]
-  redirect '/'
+  redirect '/cakes'
 end
 
-# Delete an existing cake in the database
-get '/delete_cake' do
+# Delete a cake from the database
+get '/cakes/delete' do
   erb :delete_cake
 end
 
-post '/delete_cake' do
+delete '/cakes' do
   Cake.find(params[:id]).destroy # find and destroy (eat?) the cake
-  #params[:id] + " was successfully deleted"
-  redirect '/'
+  redirect '/cakes'
+end
+
+# Read a single row - this needs to be the last route so that cakes/new, cakes/edit and cakes/delete are handled correctly
+get '/cakes/:id' do
+  # Query database and display
+  data = Cake.find_by(id: params[:id])
+  data.name # display cake name
 end
 
 

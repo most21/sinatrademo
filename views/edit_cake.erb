@@ -1,5 +1,6 @@
-<form action="/edit_cake" method="post">
+<form action="/cakes" method="post">
   <p> ID to edit: <input type="text" name="id"></p>
   <p>New cake name: <input type="text" name="name"></p>
+  <input type='hidden' name='_method' value='PUT'>
   <input type="submit">
 </form>
