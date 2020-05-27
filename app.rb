@@ -7,12 +7,25 @@ require 'sinatra/activerecord'
 class Cake < ActiveRecord::Base
 end
 
+# Read all rows
 get '/' do
-  #{}"Hello world"
-  #c = Cake.create(name: "test")
-  Cake.find(2)
-
+  data = Cake.all # query database for all rows in the cakes table
+  erb :index, :locals => {:cake_list => data}
 end
+
+# Read a single row
+get '/:id' do
+  data = Cake.find(params[:id]) # query database for specific cake id
+  data.name # display cake name
+end
+
+# Add a cake to the database
+# post '/:type' do
+#   c = Cake.create(name: params[:type]) # create and save new row to db table
+#   #params[:type] + " was successfully added to the database"
+#   erb :add_cake
+#
+# end
 
 
 
